@@ -13,7 +13,8 @@ int dtob(int b);
 int btod(int c);
 int dtoo(int b);
 int otod(int b);
-
+void dtoh(int decimal);
+int htod(char hex[]);
 
 int main()
 {
@@ -28,19 +29,16 @@ int main()
   printf("Octal representation:%d\n", a);
   int b = otod(a);
   printf("Decimal representation:%d\n", b);
+  dtoh(b);
+  
+  char hex[20];
+  printf("Enter hexadecimal to convert to decimal: ");
+  scanf("%s", hex);
+  int hextodecimal = htod(hex);
+  printf("Decimal from hexadecimal: %d\n",hextodecimal);
   return 0;
 }
-/* while(x>0) {
-     divide=x%2;
-     x=x/2;
-     arr[i]=divide;
-     ++i;
-   }
-int j;
-for(j=i-1;j>=0;j--){
- printf("%d",arr[j]);
 
-}*/
 int dtoo(int b)
 {
   int k = 0;
@@ -105,4 +103,47 @@ int otod(int b)
     ++f;
   }
   return sum;
+}
+
+void dtoh(int decimal) {
+    char hexDigits[] = "0123456789ABCDEF";
+    char hex[32];
+    int i = 0;
+
+    if (decimal == 0) {
+        printf("Hexadecimal representation: 0\n");
+    }
+   else{
+    while (decimal > 0) {
+        int rem = decimal % 16;
+        hex[i++] = hexDigits[rem];
+        decimal /= 16;
+    }
+ 
+    printf("Hexadecimal representation: ");
+    for (int j = i - 1; j >= 0; j--) {
+        printf("%c", hex[j]);
+    }
+    printf("\n");
+  }
+}
+
+int htod(char hex[]) {
+    int len = 0, base = 1, decimal = 0;
+    while (hex[len] != '\0') {
+        len++;
+    }
+    for (int i = len - 1; i >= 0; i--) {
+        char ch = hex[i];
+        if (ch >= '0' && ch <= '9') {
+            decimal += (ch - '0') * base;
+        } else if (ch >= 'A' && ch <= 'F') {
+            decimal += (ch - 'A' + 10) * base;
+        } else if (ch >= 'a' && ch <= 'f') {
+            decimal += (ch - 'a' + 10) * base;
+        }
+        base *= 16;
+    }
+
+    return decimal;
 }
