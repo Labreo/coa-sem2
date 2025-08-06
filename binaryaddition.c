@@ -24,14 +24,14 @@ int main()
 
     binadd(a, b, answeradd);
 
-    printf("\nResult (4-bit binary): ");
+    printf("\nResult addition (4-bit binary): ");
     for (int i = 0; i < 4; i++)
     {
         printf("%d", answeradd[i]);
     }
 
     binsubtract(a, b, answersub);
-    printf("\nResult (4-bit binary): ");
+    printf("\nResult subtraction (4-bit binary): ");
     for (int i = 0; i < 4; i++)
     {
         printf("%d", answersub[i]);
@@ -39,7 +39,8 @@ int main()
 
     return 0;
 }
-
+/*Get the no do mod%2 of the result reminder 1 or 0 suppose then sum=2 then carry=1 which holds
+ same for sum=3 carry=1 since it is int */
 void binadd(int x[4], int y[4], int result[4])
 {
     int carry = 0;
@@ -50,7 +51,7 @@ void binadd(int x[4], int y[4], int result[4])
         carry = sum / 2;
     }
 }
-
+//Ulta then just change
 void compliment1(int arr[4], int result[4])
 {
     for (int i = 0; i < 4; i++)
@@ -58,7 +59,7 @@ void compliment1(int arr[4], int result[4])
         result[i] = arr[i] == 0 ? 1 : 0;
     }
 }
-
+//add 1 to comp1
 void compliment2(int arr[4], int result[4])
 {
     int one[4] = {0, 0, 0, 1};
@@ -68,6 +69,7 @@ void compliment2(int arr[4], int result[4])
     binadd(temp, one, result);
 }
 
+//get comp2 and subtract
 void binsubtract(int x[4], int y[4], int result[4])
 {
     int negy[4];

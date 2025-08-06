@@ -39,6 +39,8 @@ int main()
   return 0;
 }
 
+/*get the digit do %8 that will give remainder which is the represnetation
+ then do divide 8 till greater than 0*/
 int dtoo(int b)
 {
   int k = 0;
@@ -59,6 +61,7 @@ int dtoo(int b)
   return k;
 }
 
+//Similar process with 2 now
 int dtob(int b)
 {
   while (b > 0)
@@ -77,7 +80,7 @@ int dtob(int b)
 
   return k;
 }
-
+//multiply ecer single single digit from right to left with 2^ thier index
 int btod(int c)
 {
   int sum = 0;
@@ -90,7 +93,7 @@ int btod(int c)
   }
   return sum;
 }
-
+//similar with power of 8
 int otod(int b)
 {
   int sum = 0;
@@ -105,6 +108,8 @@ int otod(int b)
   return sum;
 }
 
+/*have array with hexdigits hex char array which is empty then mod 16
+assign whatever rem you get as index for hex digits and then set to hex array*/
 void dtoh(int decimal) {
     char hexDigits[] = "0123456789ABCDEF";
     char hex[32];
@@ -128,6 +133,7 @@ void dtoh(int decimal) {
   }
 }
 
+/*get char then start from right to left then:*/
 int htod(char hex[]) {
     int len = 0, base = 1, decimal = 0;
     while (hex[len] != '\0') {
@@ -135,6 +141,9 @@ int htod(char hex[]) {
     }
     for (int i = len - 1; i >= 0; i--) {
         char ch = hex[i];
+        /*characters '0' to '9' represent values 0–9.
+        eg '3' - '0' = 51 - 48 = 3 then 10-16 is by a to f multiply with 
+        resp base 16*/
         if (ch >= '0' && ch <= '9') {
             decimal += (ch - '0') * base;
         } else if (ch >= 'A' && ch <= 'F') {
