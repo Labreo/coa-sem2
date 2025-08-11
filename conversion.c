@@ -16,27 +16,35 @@ int otod(int b);
 void dtoh(int decimal);
 int htod(char hex[]);
 
-int main()
-{
+int main() {
+    int decimal, binary, octal;
+    char hex[20];
 
-  printf("Enter the decimal no:");
-  scanf("%d", &x);
-  int y = dtob(x);
-  printf("Binary representation:%d\n", y);
-  int z = btod(y);
-  printf("Decimal representation:%d\n", z);
-  int a = dtoo(z);
-  printf("Octal representation:%d\n", a);
-  int b = otod(a);
-  printf("Decimal representation:%d\n", b);
-  dtoh(b);
-  
-  char hex[20];
-  printf("Enter hexadecimal to convert to decimal: ");
-  scanf("%s", hex);
-  int hextodecimal = htod(hex);
-  printf("Decimal from hexadecimal: %d\n",hextodecimal);
-  return 0;
+    printf("Enter a decimal number to convert to binary: ");
+    scanf("%d", &decimal);
+    printf("Binary representation: %d\n", dtob(decimal));
+
+    printf("\nEnter a binary number to convert to decimal: ");
+    scanf("%d", &binary);
+    printf("Decimal representation: %d\n", btod(binary));
+
+    printf("\nEnter a decimal number to convert to octal: ");
+    scanf("%d", &decimal);
+    printf("Octal representation: %d\n", dtoo(decimal));
+
+    printf("\nEnter an octal number to convert to decimal: ");
+    scanf("%d", &octal);
+    printf("Decimal representation: %d\n", otod(octal));
+
+    printf("\nEnter a decimal number to convert to hexadecimal: ");
+    scanf("%d", &decimal);
+    dtoh(decimal);
+
+    printf("\nEnter a hexadecimal number to convert to decimal: ");
+    scanf("%s", hex);
+    printf("Decimal representation: %d\n", htod(hex));
+
+    return 0;
 }
 
 /*get the digit do %8 that will give remainder which is the represnetation
