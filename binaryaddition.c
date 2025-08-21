@@ -1,85 +1,113 @@
 #include <stdio.h>
+#include <string.h>
 
-void binadd(int x[4], int y[4], int result[4]);
-void compliment1(int arr[4], int result[4]);
-void compliment2(int arr[4], int result[4]);
-void binsubtract(int x[4], int y[4], int negb[4]);
+void binadd(int x[], int y[], int result[], int count);
+void compliment1(int arr[], int result[], int count);
+void compliment2(int arr[], int result[], int count);
+void binsubtract(int x[], int y[], int result[], int count);
 
 int main()
 {
-    int a[4], b[4];
-    int answeradd[4] = {0, 0, 0, 0};
-    int answersub[4] = {0, 0, 0, 0};
-    printf("Enter first number: ");
-    for (int i = 0; i < 4; i++)
-    {
-        scanf("%d", &a[i]);
+    int count;
+    printf("Enter number of bits: ");
+    scanf("%d", &count);
+
+    if (count <= 0) {
+        printf("Invalid bit size.\n");
+        return 1;
     }
 
-    printf("Enter second number: ");
-    for (int i = 0; i < 4; i++)
-    {
-        scanf("%d", &b[i]);
+    int a[count], b[count], answer[count];
+    for (int i = 0; i < count; i++) {
+        a[i] = b[i] = answer[i] = 0;
     }
 
-    binadd(a, b, answeradd);
-
-    printf("\nResult addition (4-bit binary): ");
-    for (int i = 0; i < 4; i++)
-    {
-        printf("%d", answeradd[i]);
+    char input[100];
+    printf("Enter first number (%d bits): ", count);
+    scanf("%s", input);
+    if ((int)strlen(input) != count) {
+        printf("Invalid input. Enter exactly %d bits.\n", count);
+        return 1;
+    }
+    for (int i = 0; i < count; i++) {
+        a[i] = (input[i] == '1') ? 1 : 0;
     }
 
-    binsubtract(a, b, answersub);
-    printf("\nResult subtraction (4-bit binary): ");
-    for (int i = 0; i < 4; i++)
-    {
-        printf("%d", answersub[i]);
+    printf("Enter second number (%d bits): ", count);
+    scanf("%s", input);
+    if ((int)strlen(input) != count) {
+        printf("Invalid input. Enter exactly %d bits.\n", count);
+        return 1;
     }
+    for (int i = 0; i < count; i++) {
+        b[i] = (input[i] == '1') ? 1 : 0;
+    }
+
+    int choice;
+    printf("Choose operation:\n1. Addition\n2. Subtraction\nEnter choice: ");
+    scanf("%d", &choice);
+
+    if (choice == 1)
+    {
+        binadd(a, b, answer, count);
+        printf("\nResult addition (%d-bit binary): ", count);
+    }
+    else if (choice == 2)
+    {
+        binsubtract(a, b, answer, count);
+        printf("\nResult subtraction (%d-bit binary): ", count);
+    }
+    else
+    {
+        printf("Invalid choice.\n");
+        return 1;
+    }
+
+    for (int i = 0; i < count; i++)
+    {
+        printf("%d", answer[i]);
+    }
+    printf("\n");
 
     return 0;
 }
-/*Get the no do mod%2 of the result reminder 1 or 0 suppose then sum=2 then carry=1 which holds
- same for sum=3 carry=1 since it is int */
-void binadd(int x[4], int y[4], int result[4])
+
+void binadd(int x[], int y[], int result[], int count)
 {
     int carry = 0;
-    for (int i = 3; i >= 0; i--)
+    for (int i = count - 1; i >= 0; i--)
     {
         int sum = x[i] + y[i] + carry;
         result[i] = sum % 2;
         carry = sum / 2;
     }
 }
-//Ulta then just change
-void compliment1(int arr[4], int result[4])
+
+void compliment1(int arr[], int result[], int count)
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < count; i++)
     {
         result[i] = arr[i] == 0 ? 1 : 0;
     }
 }
-//add 1 to comp1
-void compliment2(int arr[4], int result[4])
-{
-    int one[4] = {0, 0, 0, 1};
-    int temp[4];
 
-    compliment1(arr, temp);
-    binadd(temp, one, result);
+void compliment2(int arr[], int result[], int count)
+{
+    int one[count];
+    int temp[count];
+    for (int i = 0; i < count; i++) {
+        one[i] = 0;
+        temp[i] = 0;
+    }
+    one[count - 1] = 1;
+    compliment1(arr, temp, count);
+    binadd(temp, one, result, count);
 }
 
-//get comp2 and subtract
-void binsubtract(int x[4], int y[4], int result[4])
+void binsubtract(int x[], int y[], int result[], int count)
 {
-    int negy[4];
-    compliment2(y, negy);
-    binadd(x, negy, result);
+    int negy[count];
+    for (int i = 0; i < count; i++) negy[i] = 0;
+    compliment2(y, negy, count);
+    binadd(x, negy, result, count);
 }
-/*111+101= users enter convert dec to binary 4)additon subtraction 1's compliment 2's compliment 2's complimwnt 8 bit represemtatipn  accept 2 compliment 4bit 5 bit pass 2 compliment
-pass to 1's compliment
-add 2 no'a funciton
-subtract 2's no
-call 2nd second pass to 2's compliment of it
-call 1's compliment in 2's compliment
-*/
